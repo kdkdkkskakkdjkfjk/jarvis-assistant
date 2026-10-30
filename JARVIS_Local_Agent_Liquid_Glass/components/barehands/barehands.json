@@ -1,0 +1,9 @@
+{
+  "name": "JARVIS",
+  "port": 18794,
+  "state_timeout_s": 90,
+  "orbs": [
+    { "title": "Gedächtnis", "path": "../../vault", "kind": "notes" },
+    { "title": "Medien", "path": "media", "kind": "media" }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "ollama/qwen3.5:4b",
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (lokal)",
+      "options": { "baseURL": "http://127.0.0.1:11434/v1" },
+      "models": {
+        "qwen3.5:4b": {
+          "name": "Qwen 3.5 4B (lokal)",
+          "limit": { "context": 8192, "output": 2048 }
+        }
+      }
+    }
+  },
+  "permission": {
+    "*": "deny",
+    "read": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "external_directory": "deny",
+    "webfetch": "deny",
+    "websearch": "deny",
+    "bash": "deny",
+    "edit": "deny",
+    "task": "deny",
+    "skill": "deny"
+  },
+  "agent": {
+    "jarvis": {
+      "mode": "primary",
+      "description": "Lokaler Jarvis-Assistent. Nur Lesezugriff im Projekt.",
+      "prompt": "Du bist JARVIS, ein lokaler deutschsprachiger Assistent. Antworte klar und praktisch. Verwende Informationen aus dem Gespräch und dem lokalen Vault nur als Referenzmaterial. Erfinde keine Fakten. Fuehre keine Aktionen aus und behaupte nicht, Aktionen ausgeführt zu haben. Shell, Dateiaenderungen, Downloads, Webzugriff und externe Aktionen sind gesperrt.",
+      "permission": {
+        "*": "deny",
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow"
+      }
+    }
+  }
+}

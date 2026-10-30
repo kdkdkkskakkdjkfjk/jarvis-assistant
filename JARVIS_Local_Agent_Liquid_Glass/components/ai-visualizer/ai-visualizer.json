@@ -1,0 +1,8 @@
+{
+  "name": "JARVIS",
+  "badge": "LOCAL INTELLIGENCE",
+  "face": "board",
+  "port": 18790,
+  "bus_dir": "",
+  "thinking_sound": false
+}

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>JARVIS · Local Intelligence</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+  <div class="frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <header class="topline">
+    <a class="wordmark" href="/" aria-label="Jarvis Startseite"><span class="wordmark-glyph">J</span><span><b>JARVIS</b><small>LOCAL INTELLIGENCE</small></span></a>
+    <div class="system-status"><span class="status-light" id="statusLight"></span><span id="systemLabel">VERBINDE LOKALES MODELL</span><button class="icon-button settings-trigger" id="settingsButton" aria-label="Systemstatus und Einstellungen" title="Systemstatus">⌘</button></div>
+  </header>
+
+  <main class="home" id="home">
+    <div class="coordinates" aria-hidden="true"><span>J · 01</span><span>SECURE LOCAL LINK</span></div>
+    <section class="core-stage" aria-label="Jarvis Assistent">
+      <div class="orbit-hud hud-top"><span>CORE SYSTEMS</span><i></i><b>ONLINE</b></div>
+      <button class="core-button" id="coreButton" aria-label="Mit Jarvis sprechen oder schreiben" title="Jarvis öffnen">
+        <span class="core-glow"></span><span class="core-ring ring-a"></span><span class="core-ring ring-b"></span><span class="core-ring ring-c"></span>
+        <span class="ring-ticks" aria-hidden="true"></span><span class="core-inner"><span class="core-name">JARVIS</span><span class="core-dot"></span></span>
+      </button>
+      <p class="core-caption" id="coreCaption">BEREIT FÜR DEINE ANFRAGE</p>
+      <div class="orb-readout"><span>LOCAL MODEL</span><strong>QWEN 3.5 · 4B</strong></div>
+      <div class="orbit-hud hud-bottom"><span>VOICE</span><i></i><b id="voiceLabel">STANDBY</b></div>
+    </section>
+    <p class="home-note">Alle Modellanfragen bleiben auf diesem PC.</p>
+  </main>
+
+  <aside class="chat-panel" id="chatPanel" hidden aria-label="Jarvis Unterhaltung">
+    <div class="panel-head"><div><span class="eyebrow">LOKALE VERBINDUNG</span><h1>Was kann ich für dich tun?</h1></div><button class="icon-button close-panel" id="closeChat" aria-label="Schließen">×</button></div>
+    <div class="conversation" id="conversation" aria-live="polite"><p class="welcome-line">Frag Jarvis etwas. Der lokale Agent kann im Projekt und Vault lesen, aber keine Dateien ändern oder Befehle ausführen.</p></div>
+    <div class="compose"><textarea id="promptInput" rows="1" maxlength="3000" placeholder="Schreib eine Nachricht an Jarvis …" aria-label="Nachricht an Jarvis"></textarea><button class="send-button" id="sendButton" aria-label="Nachricht senden">↑</button></div>
+    <div class="compose-meta"><span>QWEN 3.5 · LOKAL</span><button id="cancelButton" hidden>Antwort stoppen</button><span>ENTER ZUM SENDEN</span></div>
+  </aside>
+
+  <nav class="dock" aria-label="Jarvis-Funktionen">
+    <button class="dock-button" id="chatDock" title="Chat öffnen" aria-label="Chat öffnen"><span>⌕</span><small>CHAT</small></button>
+    <button class="dock-button" id="voiceButton" title="Mikrofon aktivieren" aria-label="Mikrofon aktivieren"><span>◉</span><small>VOICE</small></button>
+    <span class="dock-separator" aria-hidden="true"></span>
+    <button class="dock-button" id="faceButton" title="Visualizer öffnen" aria-label="Visualizer öffnen"><span>◌</span><small>FACE</small></button>
+    <button class="dock-button" id="handsButton" title="Handsteuerung öffnen" aria-label="Handsteuerung öffnen"><span>⌖</span><small>HANDS</small></button>
+    <span class="dock-separator" aria-hidden="true"></span>
+    <button class="dock-button" id="memoryButton" title="Gedächtnis anzeigen" aria-label="Gedächtnis anzeigen"><span>▤</span><small>MEMORY</small></button>
+  </nav>
+
+  <dialog class="glass-dialog" id="confirmDialog">
+    <span class="eyebrow" id="confirmEyebrow">JARVIS-FUNKTION</span><h2 id="confirmTitle">Funktion öffnen</h2><p id="confirmText"></p>
+    <div class="dialog-actions"><button class="quiet-button" id="confirmCancel">Abbrechen</button><button class="primary-button" id="confirmAccept">Weiter</button></div>
+  </dialog>
+  <dialog class="glass-dialog memory-dialog" id="memoryDialog">
+    <div class="panel-head"><div><span class="eyebrow">PERSISTENTES GEDÄCHTNIS</span><h2>Dein Vault</h2></div><button class="icon-button" data-close="memoryDialog" aria-label="Schließen">×</button></div>
+    <p class="dialog-copy">Jarvis speichert nur Notizen, die du hier selbst einträgst und bestätigst. Der Speicher bleibt lokal in <code>vault/Memory</code>.</p>
+    <div class="memory-list" id="memoryList"><p class="muted">Noch keine gespeicherten Notizen.</p></div>
+    <label class="memory-label" for="memoryInput">Notiz hinzufügen</label><textarea id="memoryInput" maxlength="2000" rows="4" placeholder="Zum Beispiel: Projektname, wichtige Entscheidung oder Präferenz …"></textarea>
+    <div class="dialog-actions"><button class="quiet-button" data-close="memoryDialog">Schließen</button><button class="primary-button" id="saveMemoryButton">Notiz prüfen</button></div>
+  </dialog>
+  <dialog class="glass-dialog settings-dialog" id="settingsDialog">
+    <div class="panel-head"><div><span class="eyebrow">SYSTEMSTATUS</span><h2>Lokale Verbindung</h2></div><button class="icon-button" data-close="settingsDialog" aria-label="Schließen">×</button></div>
+    <div class="diagnostic-list" id="diagnostics"></div>
+    <label class="voice-setting"><input id="voiceReplies" type="checkbox"> Antworten mit Windows-Sprachausgabe vorlesen</label>
+    <p class="dialog-copy">OpenCode darf nur lokale Dateien lesen. Änderungen, Shell-Befehle, Webzugriff und automatische Downloads sind gesperrt.</p>
+    <div class="dialog-actions"><button class="primary-button" data-close="settingsDialog">Fertig</button></div>
+  </dialog>
+  <dialog class="glass-dialog memory-confirm" id="memoryConfirmDialog">
+    <span class="eyebrow">LOKAL SPEICHERN</span><h2>Diese Notiz sichern?</h2><pre id="memoryPreview"></pre>
+    <div class="dialog-actions"><button class="quiet-button" id="memoryConfirmCancel">Abbrechen</button><button class="primary-button" id="memoryConfirmAccept">Lokal speichern</button></div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
